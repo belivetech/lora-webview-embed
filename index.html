@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<link rel="icon" href="/favicon.ico" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>LORA Sample App</title>
+	</head>
+	<body>
+		<script src="https://lora-sdk.belive.sg/player-widget/latest/player.min.js"></script>
+		<script>
+			window.addEventListener("load", function () {
+				var showId = "b5ed4b45-9d2f-4f92-aabd-992fb189c0ff";
+
+				var player = window.BeLivePlayerWidget.initialize({
+					showId: showId,
+					navigationMode: window.BeLivePlayerWidget.NavigationMode.MANUAL,
+					buttons: {
+						dismiss: window.BeLivePlayerWidget.Button.CLOSE,
+					},
+				}).open();
+
+				player.on(window.BeLivePlayerWidget.PlayerEventType.READY, () => {
+					if (LoraChannel) {
+						LoraChannel.postMessage(
+							JSON.stringify({
+								type: "player.READY",
+							})
+						);
+					}
+				});
+			});
+		</script>
+	</body>
+</html>
